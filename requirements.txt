@@ -7,3 +7,4 @@ python-dotenv
 djangorestframework
 djangorestframework-simplejwt
 pillow
+mysqlclient
