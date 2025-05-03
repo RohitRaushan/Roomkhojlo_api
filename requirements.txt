@@ -7,4 +7,4 @@ python-dotenv
 djangorestframework
 djangorestframework-simplejwt
 pillow
-mysqlclient
+mysqlclient==2.1.0
