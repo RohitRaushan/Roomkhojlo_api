@@ -97,7 +97,11 @@ WSGI_APPLICATION = 'Roomkhojlo_api_project.wsgi.application'
 import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
+    'default': dj_database_url.config(
+        default='mysql://root:XSMTPiHfUudRkBhCEkEFhfhQlpBeeweV@hopper.proxy.rlwy.net:11240/railway',
+        conn_max_age=600,
+        ssl_require=False
+    )
 }
 
 REST_FRAMEWORK = {
