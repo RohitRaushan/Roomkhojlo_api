@@ -80,16 +80,22 @@ WSGI_APPLICATION = 'Roomkhojlo_api_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
+# DATABASES = {
     
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test_1',
-        'USER': 'Rohit',
-        'PASSWORD': 'rohit12',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'test_1',
+#         'USER': 'Rohit',
+#         'PASSWORD': 'rohit12',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
+import dj_database_url
+
+DATABASES = {
+    'default': dj_database_url.config(default="mysql://root:XSMTPiHfUudRkBhCEkEFhfhQlpBeeweV@mysql.railway.internal:3306/railway")
 }
 
 REST_FRAMEWORK = {
