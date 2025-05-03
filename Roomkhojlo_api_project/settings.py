@@ -16,6 +16,8 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+from dotenv import load_dotenv
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -95,8 +97,15 @@ WSGI_APPLICATION = 'Roomkhojlo_api_project.wsgi.application'
 import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.config(default="mysql://root:XSMTPiHfUudRkBhCEkEFhfhQlpBeeweV@mysql.railway.internal:3306/railway")
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
 }
+
+# Use MySQL on Railway (if DATABASE_URL is set)
+if os.environ.get("mysql://root:XSMTPiHfUudRkBhCEkEFhfhQlpBeeweV@mysql.railway.internal:3306/railway"):
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
