@@ -25,6 +25,7 @@ class Tenant(AbstractBaseUser):
     address = models.CharField(max_length=255)
     photo = models.ImageField(upload_to='tenant_photos/', default='tenant_photos/default.jpg', null=True, blank=True)
     role=models.CharField(max_length=100, default='tenant')
+    tenant_type = models.CharField(max_length=100, null=True, blank=True)
     emp_id = models.CharField(max_length=150, null=True, blank=True)
     token = models.CharField(max_length=255, null=True, blank=True)
     is_active = models.BooleanField(default=True)
