@@ -41,12 +41,15 @@ from .views import (
 
     #enquiry without authentication
     EnquiryCreateView,
-    BookingCreateView,BookingListView
+    BookingCreateView,BookingListView,BuildingFilteredListView
 )
 
 urlpatterns = [
     # Authentication
     path('login/', LoginView.as_view(), name='login'),
+
+    # Building Filtered List
+    path('building/filtered-list/', BuildingFilteredListView.as_view(), name='building-filtered-list'),
 
     #review create without authentication
     path('review/create/', ReviewCreateView.as_view(), name='review-create'),

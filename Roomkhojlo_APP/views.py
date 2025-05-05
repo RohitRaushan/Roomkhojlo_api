@@ -1859,27 +1859,36 @@ class BuildingListView(APIView):
     
 #building filter 
 class BuildingFilteredListView(APIView):
-    # No authentication required
-
     def get(self, request):
         queryset = Building.objects.all()
 
-        # Collect all possible filterable fields
-        filters = {
-            'state__iexact': request.query_params.get('state', None),
-            'city__iexact': request.query_params.get('city', None),
-            'district__iexact': request.query_params.get('district', None),
-            'room_type__iexact': request.query_params.get('room_type', None),
-            'gender__iexact': request.query_params.get('gender', None),
-            'amenities__iexact': request.query_params.get('amenities', None),
-            'locality__iexact': request.query_params.get('locality', None),
-            'pincode__iexact': request.query_params.get('pincode', None),
-            'furnishing_status__iexact': request.query_params.get('furnishing_status', None),
+        filter_fields = {
+            'state__iexact': 'state',
+            'building_name__iexact': 'building_name',
+            'city__iexact': 'city',
+            'district__iexact': 'district',
+            'room_type__iexact': 'room_type',
+            'gender__iexact': 'gender',
+            'amenities__iexact': 'amenities',
+            'locality__iexact': 'locality',
+            'pincode__iexact': 'pincode',
+            'furnishing_status__iexact': 'furnishing_status',
         }
 
-        # Apply only non-None filters dynamically
-        filters = {key: value for key, value in filters.items() if value is not None}
+        # Build filters from standard params
+        filters = {
+            model_field: request.query_params.get(param_name)
+            for model_field, param_name in filter_fields.items()
+            if request.query_params.get(param_name) is not None
+        }
 
+        # Special logic: match 'occupancy' and 'tenants_type' to room_type
+        for param in ['occupancy', 'tenants_type']:
+            value = request.query_params.get(param)
+            if value:
+                filters['room_type__iexact'] = value
+
+        # Apply filters
         if filters:
             queryset = queryset.filter(**filters)
 
