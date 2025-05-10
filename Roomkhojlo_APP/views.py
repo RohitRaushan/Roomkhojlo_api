@@ -20,10 +20,25 @@ from django.contrib.auth.hashers import check_password
 from .custom_token import generate_token, MultiModelTokenAuthentication
 from rest_framework.exceptions import PermissionDenied
 # Create view for Tenant
+class TenantCreateTokenView(generics.CreateAPIView):
+    queryset = Tenant.objects.all()
+    serializer_class = TenantSerializer
+    permission_classes = [AllowAny]
+
 class TenantCreateView(generics.CreateAPIView):
     queryset = Tenant.objects.all()
     serializer_class = TenantSerializer
     permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        tenant = serializer.save()
+
+        return Response({
+            'isSuccess': True,
+            'message': tenant.name + ' Tenant created successfully',
+        }, status=status.HTTP_201_CREATED)
 
 class TenantDetailView(APIView):
     authentication_classes = [MultiModelTokenAuthentication]
@@ -86,10 +101,25 @@ class TenantDeleteView(APIView):
 
 
 # Create view for Landlord
+class LandlordCreateTokenView(generics.CreateAPIView):
+    queryset = Landlord.objects.all()
+    serializer_class = LandlordSerializer
+    permission_classes = [AllowAny]
+
 class LandlordCreateView(generics.CreateAPIView):
     queryset = Landlord.objects.all()
     serializer_class = LandlordSerializer
     permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        landlord = serializer.save()
+
+        return Response({
+            'isSuccess': True,
+            'message': landlord.name + ' Landlord created successfully',
+        }, status=status.HTTP_201_CREATED)
 
 class LandlordListView(APIView):
     def get(self, request):
@@ -263,10 +293,25 @@ class EmployeeDeleteView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 # Create view for Agent
+class AgentCreateTokenView(generics.CreateAPIView):
+    queryset = Agent.objects.all()
+    serializer_class = AgentSerializer
+    permission_classes = [AllowAny]
+
 class AgentCreateView(generics.CreateAPIView):
     queryset = Agent.objects.all()
     serializer_class = AgentSerializer
     permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        agent = serializer.save()
+
+        return Response({
+            'isSuccess': True,
+            'message': agent.name + ' Agent created successfully',
+        }, status=status.HTTP_201_CREATED)
 
 class AgentDetailView(APIView):
     authentication_classes = [MultiModelTokenAuthentication]

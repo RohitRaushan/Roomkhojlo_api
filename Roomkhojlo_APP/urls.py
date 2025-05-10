@@ -41,12 +41,19 @@ from .views import (
 
     #enquiry without authentication
     EnquiryCreateView,
-    BookingCreateView,BookingListView,BuildingFilteredListView
+    BookingCreateView,BookingListView,BuildingFilteredListView,
+    TenantCreateTokenView, LandlordCreateTokenView, AgentCreateTokenView
 )
 
 urlpatterns = [
     # Authentication
     path('login/', LoginView.as_view(), name='login'),
+
+    #signup
+    path('employee-create/', EmployeeCreateView.as_view(), name='employee-create'),
+    path('tenant-create/', TenantCreateView.as_view(), name='tenant-create'),
+    path('landlord-create/', LandlordCreateView.as_view(), name='landlord-create'),
+    path('agent-create/', AgentCreateView.as_view(), name='agent-create'),
 
     # Building Filtered List
     path('building/filtered-list/', BuildingFilteredListView.as_view(), name='building-filtered-list'),
@@ -55,7 +62,7 @@ urlpatterns = [
     path('review/create/', ReviewCreateView.as_view(), name='review-create'),
     path('review/list/', ReviewListPublicView.as_view(), name='review-list-public'),
     # Employee URLs
-    path('employee/create/', EmployeeCreateView.as_view(), name='employee-create'),
+    
     path('employee/create-token/', EmployeeCreateTokenView.as_view(), name='employee-create-token'),
     path('employee/list/', EmployeeListView.as_view(), name='employee-list'),
     path('employee/<int:id>/', EmployeeDetailView.as_view(), name='employee-detail'),
@@ -148,13 +155,13 @@ urlpatterns = [
     path('booking/delete-by-tenant/<int:id>/', BookingDeleteByTenantView.as_view(), name='booking-delete-by-tenant'),
 
     # Tenant URLs
-    path('tenant/create/', TenantCreateView.as_view(), name='tenant-create'),
+    path('tenant/create/', TenantCreateTokenView.as_view(), name='tenant-create'),
     path('tenant/<int:id>/', TenantDetailView.as_view(), name='tenant-detail'),
     path('tenant/<int:id>/update/', TenantUpdateView.as_view(), name='tenant-update'),
     path('tenant/<int:id>/delete/', TenantDeleteView.as_view(), name='tenant-delete'),
 
     # Landlord URLs
-    path('landlord/create/', LandlordCreateView.as_view(), name='landlord-create'),
+    path('landlord/create/', LandlordCreateTokenView.as_view(), name='landlord-create'),
     path('landlords/', LandlordListView.as_view(), name='landlord-list'),
     path('landlords/auth/', LandlordListAuthView.as_view(), name='landlord-list-auth'), #for authentication
     path('landlord/<int:id>/', LandlordDetailView.as_view(), name='landlord-detail'),
@@ -162,7 +169,7 @@ urlpatterns = [
     path('landlord/<int:id>/delete/', LandlordDeleteView.as_view(), name='landlord-delete'),
 
     # Agent URLs
-    path('agent/create/', AgentCreateView.as_view(), name='agent-create'),
+    path('agent/create/', AgentCreateTokenView.as_view(), name='agent-create'),
     path('agent/<int:id>/', AgentDetailView.as_view(), name='agent-detail'),
     path('agent/<int:id>/update/', AgentUpdateView.as_view(), name='agent-update'),
     path('agent/<int:id>/delete/', AgentDeleteView.as_view(), name='agent-delete'),
